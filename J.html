@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Jokes Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Q&J Style.css" />
+  <style>
+    body {
+      background-color: #03142E;
+      font-family: 'Saira Stencil One', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+  <Button class="h">Home</Button>
+
+  <div class="container2">
+    <h1>Live Joke Generator</h1>
+    <div id="joke-box">Click the button to hear a joke!</div>
+    <button id="joke-btn">Generate Joke</button>
+  </div>
+
+ <script> 
+
+  const jokeBox = document.getElementById('joke-box');
+  const jokeBtn = document.getElementById('joke-btn');
+
+  async function fetchJoke() {
+    try {
+      jokeBox.textContent = 'Loading joke...';
+      const response = await fetch('https://v2.jokeapi.dev/joke/Any?type=single');
+      const data = await response.json();
+
+      if (data.joke) {
+        jokeBox.textContent = data.joke;
+      } else {
+        jokeBox.textContent = 'Oops! Could not fetch a joke.';
+      }
+    } catch (error) {
+      jokeBox.textContent = 'Error fetching joke. Please try again.';
+      console.error(error);
+    }
+  }
+
+  jokeBtn.addEventListener('click', fetchJoke);
+  </script>
+
+</body>
+</html>
